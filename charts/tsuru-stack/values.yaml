@@ -32,8 +32,12 @@ tsuru-api:
     provisioner: "kubernetes"
 
     docker:
-      registry: tsuru-registry:80
-      resolve-registry-name: true
+      registry: cr-hn-1.bizflycloud.vn
+      resolve-registry-name: false
+      registry-auth:
+        username: APPCRED_<your_key>
+        password: <your_secret_key>
+      repository-namespace: <your_name_space>
       gc:
         dry-run: false
       router: ingress-router
@@ -80,6 +84,9 @@ mongodb:
     - tsuru
     databases:
     - tsuru
+  persistence:
+    storageClass: premium-hdd1
+    size: 20Gi
 
 monitoring:
   enabled: false
@@ -89,10 +96,10 @@ ingress-nginx:
   ingressClass: tsuru-nginx
 
 certManager:
-  enabled: false
+  enabled: true
 
 registry:
-  enabled: true
+  enabled: false
 
   # set the type of filesystem to use: filesystem, s3
   storage: filesystem
